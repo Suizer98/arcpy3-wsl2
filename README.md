@@ -31,7 +31,12 @@ This project provides a seamless way to use ArcGIS Pro's Python (arcpy) from wit
 
 #### Using ArcPy from WSL2
 ```bash
-"/mnt/c/Program Files/ArcGIS/Pro/bin/Python/envs/arcgispro-py3/python.exe" your_script.py
+"/mnt/c/Program Files/ArcGIS/Pro/bin/Python/envs/arcgispro-py3/python.exe" xxx.py
+```
+
+#### Test with Docker (Experimental)
+```bash
+docker-compose up --build
 ```
 
 ## Version Compatibility
@@ -39,3 +44,4 @@ This project provides a seamless way to use ArcGIS Pro's Python (arcpy) from wit
 - **ArcGIS Pro**: 3.1.2+ (tested with 3.1.2)
 - **Python**: 3.9.16 (ArcGIS Pro default)
 - **WSL2**: Ubuntu 24.04 LTS
+- **Docker**: Any recent version

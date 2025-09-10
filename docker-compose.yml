@@ -1,0 +1,28 @@
+services:
+  arcpy3-wsl2:
+    build: .
+    privileged: true
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      # Mount current directory for test files
+      - .:/workspace
+      # Mount Windows C: drive with full /mnt path
+      - /mnt/c:/host/c:ro
+      # Mount WSL interop directories (required for Windows executable execution)
+      - /mnt:/mnt
+      - /run/WSL:/run/WSL
+      - /init:/init:ro
+      # Mount user info for proper permissions
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      # Mount home directory
+      - ${HOME}:/home/${USER}
+    environment:
+      - WSLENV=${WSLENV}
+      - WSL_DISTRO_NAME=${WSL_DISTRO_NAME}
+      - WSL_INTEROP=${WSL_INTEROP}
+      - WT_PROFILE_ID=${WT_PROFILE_ID}
+      - WT_SESSION=${WT_SESSION}
+      - HOME=/home/${USER}
+    working_dir: /workspace
+    command: ["sh", "-c", "echo 'Testing Windows Python access...' && ls -la '/host/c/Program Files/ArcGIS/Pro/bin/Python/envs/arcgispro-py3/python.exe' && echo 'Running tests...' && '/host/c/Program Files/ArcGIS/Pro/bin/Python/envs/arcgispro-py3/python.exe' -m pytest tests/test.py -v -s"]
